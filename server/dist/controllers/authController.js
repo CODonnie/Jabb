@@ -13,12 +13,14 @@ const signup = async (req, res) => {
         const { firstName, lastName, email, password, role } = req.body;
         let user = await userModel_1.default.findOne({ email });
         if (user) {
-            res.status(403).json({ status: false, message: `user ${email} already exist` });
+            res
+                .status(403)
+                .json({ status: false, message: `user ${email} already exist` });
             return;
         }
         user = new userModel_1.default({ firstName, lastName, email, password, role });
         await user.save();
-        res.status(200).json({ status: true, message: "user created", user });
+        res.status(200).json({ status: true, user });
     }
     catch (error) {
         console.error(`signup error: ${error}`);
@@ -42,14 +44,18 @@ const login = async (req, res) => {
             return;
         }
         const secret = process.env.JWT_SECRET;
-        const token = jsonwebtoken_1.default.sign({ id: user._id, role: user.role }, secret, { expiresIn: "1d" });
+        const token = jsonwebtoken_1.default.sign({ id: user._id, role: user.role }, secret, {
+            expiresIn: "1d",
+        });
         res.cookie("jabbToken", token, {
             httpOnly: true,
             sameSite: "strict",
             secure: process.env.NODE_ENV === "production",
-            maxAge: 1 * 24 * 3600 * 1000
+            maxAge: 1 * 24 * 3600 * 1000,
         });
-        res.status(200).json({ status: true, message: "User logged in successfully" });
+        res
+            .status(200)
+            .json({ status: true, message: "User logged in successfully" });
     }
     catch (error) {
         console.error(`login error: ${error}`);
@@ -60,12 +66,7 @@ exports.login = login;
 //@desc - logout User
 //@route - GET/api/auth/logout
 const logout = (req, res) => {
-    try {
-        res.clearCookie("jabbToken");
-    }
-    catch (error) {
-        console.error(`logout error: ${error}`);
-        res.status(500).json({ message: "Internal server error" });
-    }
+    res.clearCookie("jabbToken");
+    res.status(200).json({ message: "user logged out" });
 };
 exports.logout = logout;

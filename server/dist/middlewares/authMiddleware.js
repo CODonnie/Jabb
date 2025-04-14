@@ -8,13 +8,12 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const rbacConfig_1 = __importDefault(require("../config/rbacConfig"));
 const protect = (req, res, next) => {
     const token = req.cookies?.jabbToken || req.headers?.authorization?.split(" ")[1];
-    const secret = process.env.JWY_SECRET;
     if (!token) {
         res.status(401).json({ status: false, message: "no token provided" });
         return;
     }
     try {
-        const decoded = jsonwebtoken_1.default.verify(token, secret);
+        const decoded = jsonwebtoken_1.default.verify(token, process.env.JWT_SECRET);
         req.user = { id: decoded.id, role: decoded.role };
         next();
     }

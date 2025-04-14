@@ -8,14 +8,13 @@ interface AuthRequest extends Request {
 
 const protect = (req: AuthRequest, res: Response, next: NextFunction) => {
     const token = req.cookies?.jabbToken || req.headers?.authorization?.split(" ")[1];
-    const secret = process.env.JWY_SECRET as string;
     if (!token) {
         res.status(401).json({ status: false, message: "no token provided" });
         return;
     }
 
     try {
-        const decoded = jwt.verify(token, secret) as { id: string, role: string };
+        const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { id: string, role: string };
         req.user = { id: decoded.id, role: decoded.role }
         next();
     } catch (error) {
