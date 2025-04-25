@@ -10,6 +10,7 @@ const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const db_1 = __importDefault(require("./config/db"));
 const errorMiddleware_1 = require("./middlewares/errorMiddleware");
 const authRoutes_1 = __importDefault(require("./routes/authRoutes"));
+const jobRoutes_1 = __importDefault(require("./routes/jobRoutes"));
 //init
 dotenv_1.default.config();
 (0, db_1.default)();
@@ -22,6 +23,7 @@ app.use((0, cookie_parser_1.default)());
 app.use(express_1.default.urlencoded({ extended: true }));
 //routes
 app.use('/api/auth', authRoutes_1.default);
+app.use('/api/job', jobRoutes_1.default);
 //error middleware
 app.use(errorMiddleware_1.notFound);
 app.use(errorMiddleware_1.errorHandler);

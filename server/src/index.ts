@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import DBConnect from "./config/db";
 import { errorHandler, notFound } from "./middlewares/errorMiddleware";
 import authRouter from "./routes/authRoutes";
+import jobRoutes from "./routes/jobRoutes";
 
 
 //init
@@ -19,6 +20,7 @@ app.use(express.urlencoded({ extended: true}));
 
 //routes
 app.use('/api/auth', authRouter);
+app.use('/api/jobs', jobRoutes);
 
 //error middleware
 app.use(notFound);
