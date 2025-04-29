@@ -23,7 +23,7 @@ app.use((0, cookie_parser_1.default)());
 app.use(express_1.default.urlencoded({ extended: true }));
 //routes
 app.use('/api/auth', authRoutes_1.default);
-app.use('/api/job', jobRoutes_1.default);
+app.use('/api/jobs', jobRoutes_1.default);
 //error middleware
 app.use(errorMiddleware_1.notFound);
 app.use(errorMiddleware_1.errorHandler);
