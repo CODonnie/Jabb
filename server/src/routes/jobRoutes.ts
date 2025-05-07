@@ -1,6 +1,6 @@
 import express from "express";
 import protect from "../middlewares/authMiddleware";
-import {createJob, deleteJob, getAJob, getJobs, updateJob} from "../controllers/jobControllers";
+import {createJob, deleteJob, getAJob, getJobs, updateJob} from "../controllers/jobController";
 import {authorize, permit} from "../middlewares/permissionMiddleware";
 
 const jobRoutes = express.Router();

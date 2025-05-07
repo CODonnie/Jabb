@@ -69,3 +69,14 @@ export const logout = (req: Request, res: Response) => {
   res.clearCookie("jabbToken");
   res.status(200).json({ message: "user logged out" });
 };
+
+export const getUsers = async (req: Request, res: Response) => {
+	try {
+		const users = await User.find({});
+
+		res.status(200).json({ users });
+	} catch(error) {
+		console.error(`get user error: ${error}`);
+		res.status(500).json({ message: "Internal server error" });
+	}
+}

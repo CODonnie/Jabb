@@ -5,6 +5,7 @@ import DBConnect from "./config/db";
 import { errorHandler, notFound } from "./middlewares/errorMiddleware";
 import authRouter from "./routes/authRoutes";
 import jobRoutes from "./routes/jobRoutes";
+import jobAppRoutes from "./routes/jobAppRoutes";
 
 
 //init
@@ -21,6 +22,7 @@ app.use(express.urlencoded({ extended: true}));
 //routes
 app.use('/api/auth', authRouter);
 app.use('/api/jobs', jobRoutes);
+app.use('/api', jobAppRoutes);
 
 //error middleware
 app.use(notFound);
