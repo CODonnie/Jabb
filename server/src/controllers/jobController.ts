@@ -46,7 +46,7 @@ export const getJobs = async (req: Request, res: Response) => {
       sortBy,
       sortOrder,
       page = 1,
-      limit = 10,
+      limit = 5,
     } = req.query;
 
     //FILTERS
@@ -56,7 +56,7 @@ export const getJobs = async (req: Request, res: Response) => {
       query.$or = [
         { title: { $regex: search, $options: "i" } },
         { company: { $regex: search, $options: "i" } },
-        { description: { $regex: search, $option: "i" } },
+        { description: { $regex: search, $options: "i" } },
       ];
     }
 
@@ -67,7 +67,7 @@ export const getJobs = async (req: Request, res: Response) => {
             .split(",")
             .map((tag) => tag.trim());
 
-      query.tag = { $in: allTags };
+      query.tags = { $in: allTags };
     }
 
     if (type) query.type = type;

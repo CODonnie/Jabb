@@ -11,6 +11,7 @@ const db_1 = __importDefault(require("./config/db"));
 const errorMiddleware_1 = require("./middlewares/errorMiddleware");
 const authRoutes_1 = __importDefault(require("./routes/authRoutes"));
 const jobRoutes_1 = __importDefault(require("./routes/jobRoutes"));
+const jobAppRoutes_1 = __importDefault(require("./routes/jobAppRoutes"));
 //init
 dotenv_1.default.config();
 (0, db_1.default)();
@@ -24,6 +25,7 @@ app.use(express_1.default.urlencoded({ extended: true }));
 //routes
 app.use('/api/auth', authRoutes_1.default);
 app.use('/api/jobs', jobRoutes_1.default);
+app.use('/api', jobAppRoutes_1.default);
 //error middleware
 app.use(errorMiddleware_1.notFound);
 app.use(errorMiddleware_1.errorHandler);
