@@ -80,3 +80,59 @@ export const getUsers = async (req: Request, res: Response) => {
 		res.status(500).json({ message: "Internal server error" });
 	}
 }
+
+//@desc - display User Profile
+//@route - GET/api/auth/user/:id
+export const getUserProfile = async (req: Request, res: Response) => {
+	try {
+		const id = req.params.id;
+		const userId = (req as any).user?.id;
+
+		const user = await User.findOne({ _id: id });
+		if (!user) {
+			res.status(404).json({ status: false, message: "user not found" });
+			return;
+		}
+
+		if (userId.toString() !== id.toString()) {
+			res.status(403).json({ status: false, message: "access not authorized" });
+			return;
+		};
+
+		res.status(200).json({ status: true, user });
+	} catch(error) {
+		console.error(`get user error: ${error}`);
+		res.status(500).json({ message: "Internal server error" });
+	}
+};
+
+//@desc - update user info
+//@route - PUT/api/auth/user/:id
+export const updateUserInfo = async (req: Request, res: Response) => {
+	try {
+		const id = req.params.id;
+		const userId = (req as any).user?.id;
+		const userInfo = req.body;
+
+		let user = await User.findOne({ _id: id });
+		if (!user) {
+			res.status(404).json({ status: false, message: "user not found" });
+			return;
+		}
+
+		if (userId.toString() !== id.toString()) {
+			res.status(403).json({status: false, message: "unathorised access"})
+			return;
+		}
+
+		user = await User.findByIdAndUpdate(id, userInfo, {
+			new: true,
+			runValidators: true
+		});
+
+		res.status(200).json({ status: true, message: "user info updated", user });
+	} catch(error) {
+		console.error(`user info update error: ${error}`);
+		res.status(500).json({ message: "Internal server error" });
+	}
+}
