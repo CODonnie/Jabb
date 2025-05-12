@@ -7,17 +7,7 @@ import sanitizeJobPayload from "../utils/jobDTO";
 //@access - admin & employer
 export const createJob = async (req: Request, res: Response) => {
   try {
-    const userRole = (req as any).user?.role;
     const userId = (req as any).user?.id;
-
-    const permitted = userRole === "admin" || userRole === "employer";
-    if (!permitted) {
-      res.status(403).json({
-        status: false,
-        message: "access denied - admin / employer priviledges required",
-      });
-      return;
-    }
 
     const job = new Job({
       ...sanitizeJobPayload(req.body),
@@ -144,17 +134,9 @@ export const updateJob = async (req: Request, res: Response) => {
   try {
     const updata = req.body;
     const jobId = req.params.id;
-    const user = (req as any).user;
-    const isAdmin = user?.role === "admin";
     let jab = await Job.findById(jobId);
     if (!jab) {
       res.status(404).json({ status: false, message: "job not found" });
-      return;
-    }
-    const isOwner = user?.id.toString() === jab.postedBy.toString();
-
-    if (!isOwner && !isAdmin) {
-      res.status(403).json({ status: false, message: "Unauthorized access" });
       return;
     }
 
@@ -177,20 +159,11 @@ export const updateJob = async (req: Request, res: Response) => {
 export const deleteJob = async (req: Request, res: Response) => {
   try {
     const jobId = req.params.id;
-    const user = (req as any).user;
-    const isAdmin = user?.role === "admin";
     let jab = await Job.findById(jobId);
     if (!jab) {
       res.status(404).json({ status: false, message: "job not found" });
       return;
     }
-    const isOwner = user?.id.toString() === jab.postedBy.toString();
-
-    if (!isOwner && !isAdmin) {
-      res.status(403).json({ status: false, message: "Unauthorized access" });
-      return;
-    }
-
     await Job.findByIdAndDelete(jobId);
 
     res.status(200).json({ status: true, message: "job deleted" });
