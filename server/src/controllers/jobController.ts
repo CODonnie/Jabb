@@ -116,7 +116,7 @@ export const getAJob = async (req: Request, res: Response) => {
       "employer",
       "firstName lastName"
     );
-    if (!jab) {
+    if (!jab || jab.length === 0) {
       res.status(404).json({ status: false, message: "job not found" });
       return;
     }
@@ -135,7 +135,7 @@ export const updateJob = async (req: Request, res: Response) => {
     const updata = req.body;
     const jobId = req.params.id;
     let jab = await Job.findById(jobId);
-    if (!jab) {
+    if (!jab || jab.length === 0) {
       res.status(404).json({ status: false, message: "job not found" });
       return;
     }
@@ -160,7 +160,7 @@ export const deleteJob = async (req: Request, res: Response) => {
   try {
     const jobId = req.params.id;
     let jab = await Job.findById(jobId);
-    if (!jab) {
+    if (!jab || jab.length === 0) {
       res.status(404).json({ status: false, message: "job not found" });
       return;
     }
@@ -172,3 +172,4 @@ export const deleteJob = async (req: Request, res: Response) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+

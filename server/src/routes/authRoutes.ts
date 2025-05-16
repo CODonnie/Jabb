@@ -8,7 +8,7 @@ authRouter.post('/signup', signup);
 authRouter.post('/login', login);
 authRouter.get('/logout', protect, logout);
 authRouter.get('/users', getUsers);
-authRouter.get('/user/:id', protect, getUserProfile);
-authRouter.put('/user/:id', protect, updateUserInfo);
+authRouter.get('/me', protect, getUserProfile);
+authRouter.put('/me', protect, updateUserInfo);
 
 export default authRouter;
