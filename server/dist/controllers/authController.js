@@ -3,9 +3,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateUserInfo = exports.getUserProfile = exports.getUsers = exports.logout = exports.login = exports.signup = void 0;
+exports.deleteUserProfile = exports.updateUserInfo = exports.getUserProfile = exports.getUsers = exports.logout = exports.login = exports.signup = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const userModel_1 = __importDefault(require("../models/userModel"));
+const jobAppModel_1 = __importDefault(require("../models/jobAppModel"));
+const jobModel_1 = __importDefault(require("../models/jobModel"));
 //@desc - Signup User
 //@route - POST/api/auth/signup
 const signup = async (req, res) => {
@@ -82,21 +84,15 @@ const getUsers = async (req, res) => {
 };
 exports.getUsers = getUsers;
 //@desc - display User Profile
-//@route - GET/api/auth/user/:id
+//@route - GET/api/auth/me
 const getUserProfile = async (req, res) => {
     try {
-        const id = req.params.id;
         const userId = req.user?.id;
-        const user = await userModel_1.default.findOne({ id });
+        const user = await userModel_1.default.findOne({ _id: userId });
         if (!user) {
             res.status(404).json({ status: false, message: "user not found" });
             return;
         }
-        if (userId.toString() !== id.toString()) {
-            res.status(403).json({ status: false, message: "access not authorized" });
-            return;
-        }
-        ;
         res.status(200).json({ status: true, user });
     }
     catch (error) {
@@ -106,22 +102,17 @@ const getUserProfile = async (req, res) => {
 };
 exports.getUserProfile = getUserProfile;
 //@desc - update user info
-//@route - PUT/api/auth/user/:id
+//@route - PUT/api/auth/me
 const updateUserInfo = async (req, res) => {
     try {
-        const id = req.params.id;
         const userId = req.user?.id;
         const userInfo = req.body;
-        let user = await userModel_1.default.findOne({ id });
+        let user = await userModel_1.default.findOne({ _id: userId });
         if (!user) {
             res.status(404).json({ status: false, message: "user not found" });
             return;
         }
-        if (userId.toString() !== id.toString()) {
-            res.status(403).json({ status: false, message: "unathorised access" });
-            return;
-        }
-        user = await userModel_1.default.findByIdAndUpdate(id, userInfo, {
+        user = await userModel_1.default.findByIdAndUpdate(userId, userInfo, {
             new: true,
             runValidators: true
         });
@@ -133,3 +124,24 @@ const updateUserInfo = async (req, res) => {
     }
 };
 exports.updateUserInfo = updateUserInfo;
+//@desc - delete user profile
+//@route - DELETE/api/auth/me
+const deleteUserProfile = async (req, res) => {
+    try {
+        const userId = req.user?.id;
+        const user = await userModel_1.default.findOne({ _id: userId });
+        if (!user) {
+            res.status(404).json({ status: false, message: "user not found" });
+            return;
+        }
+        await userModel_1.default.findByIdAndDelete(userId);
+        await jobAppModel_1.default.deleteMany({ applicant: userId });
+        await jobModel_1.default.deleteMany({ postedBy: userId });
+        res.status(200).json({ status: true, message: "user deleted" });
+    }
+    catch (error) {
+        console.error(`delete user error: ${error}`);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};
+exports.deleteUserProfile = deleteUserProfile;

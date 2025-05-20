@@ -11,4 +11,6 @@ authRouter.post('/signup', authController_1.signup);
 authRouter.post('/login', authController_1.login);
 authRouter.get('/logout', authMiddleware_1.default, authController_1.logout);
 authRouter.get('/users', authController_1.getUsers);
+authRouter.get('/me', authMiddleware_1.default, authController_1.getUserProfile);
+authRouter.put('/me', authMiddleware_1.default, authController_1.updateUserInfo);
 exports.default = authRouter;

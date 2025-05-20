@@ -6,7 +6,7 @@ import { errorHandler, notFound } from "./middlewares/errorMiddleware";
 import authRouter from "./routes/authRoutes";
 import jobRoutes from "./routes/jobRoutes";
 import jobAppRoutes from "./routes/jobAppRoutes";
-
+import adminRoute from "./routes/adminRoutes";
 
 //init
 dotenv.config();
@@ -17,18 +17,21 @@ const port = process.env.PORT || 5002;
 //middlewares
 app.use(express.json());
 app.use(cookieParser());
-app.use(express.urlencoded({ extended: true}));
+app.use(express.urlencoded({ extended: true }));
 
 //routes
-app.use('/api/auth', authRouter);
-app.use('/api/jobs', jobRoutes);
-app.use('/api', jobAppRoutes);
+app.use("/api/auth", authRouter);
+app.use("/api/jobs", jobRoutes);
+app.use("/api", jobAppRoutes);
+app.use("/api/admin", adminRoute);
 
 //error middleware
 app.use(notFound);
 app.use(errorHandler);
 
 //server
-const server = app.listen(port, () => console.log(`Jabb server running on http://localhost:${port}`));
+const server = app.listen(port, () =>
+  console.log(`Jabb server running on http://localhost:${port}`)
+);
 
-export { app, server } 
+export { app, server };
