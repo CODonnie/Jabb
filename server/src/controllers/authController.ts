@@ -13,14 +13,14 @@ export const signup = async (req: Request, res: Response) => {
     let user = await User.findOne({ email });
     if (user) {
       res
-        .status(403)
+        .status(409)
         .json({ status: false, message: `user ${email} already exist` });
       return;
     }
 
     user = new User({ firstName, lastName, email, password, role });
     await user.save();
-    res.status(200).json({ status: true, user });
+    res.status(201).json({ status: true, user });
   } catch (error) {
     console.error(`signup error: ${error}`);
     res.status(500).json({ message: "Internal server error" });
@@ -58,7 +58,7 @@ export const login = async (req: Request, res: Response) => {
 
     res
       .status(200)
-      .json({ status: true, message: "User logged in successfully" });
+      .json({ status: true, message: "User logged in successfully", user, token });
   } catch (error) {
     console.error(`login error: ${error}`);
     res.status(500).json({ message: "Internal server error" });
