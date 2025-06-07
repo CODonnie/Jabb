@@ -6,7 +6,7 @@ import { errorHandler, notFound } from "./middlewares/errorMiddleware";
 import authRouter from "./routes/authRoutes";
 import jobRoutes from "./routes/jobRoutes";
 import jobAppRoutes from "./routes/jobAppRoutes";
-
+import adminRoute from "./routes/adminRoutes";
 
 //init
 dotenv.config();
@@ -18,9 +18,10 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
 //routes
-app.use('/api/auth', authRouter);
-app.use('/api/jobs', jobRoutes);
-app.use('/api', jobAppRoutes);
+app.use("/api/auth", authRouter);
+app.use("/api/jobs", jobRoutes);
+app.use("/api", jobAppRoutes);
+app.use("/api/admin", adminRoute);
 
 //error middleware
 app.use(notFound);
