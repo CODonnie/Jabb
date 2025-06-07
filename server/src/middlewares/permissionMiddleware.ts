@@ -31,7 +31,6 @@ export const permit = async (
 };
 
 export const adminOnly = (req: Request, res: Response, next: NextFunction) => {
-<<<<<<< HEAD
   const user = (req as any).user;
   if (!user || user.role !== "admin") {
     res.status(403).json({ message: "Unauthorised access" });
@@ -40,13 +39,3 @@ export const adminOnly = (req: Request, res: Response, next: NextFunction) => {
 
   next();
 }
-=======
-	const user = (req as any).user;
-	if (!user && user.role !== "admin") {
-		res.status(403).json({ message: "Unauthorised access - admin only" });
-		return;
-	};
-
-	next();
-}
->>>>>>> bfb14c3fe68cbc9f297b459512b7b2f1f2b3f90d
