@@ -16,7 +16,7 @@ export const createJob = async (req: Request, res: Response) => {
     });
     await job.save();
 
-    res.status(200).json({ status: true, message: "job created" });
+    res.status(201).json({ status: true, message: "job created", job });
   } catch (error) {
     console.log("job creation error: ", error);
     res.status(500).json({ message: "Internal server error" });
