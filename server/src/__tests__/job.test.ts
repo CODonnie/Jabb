@@ -64,7 +64,7 @@ describe("Job Routes", () => {
   it("should update the job if user is the poster", async () => {
     const job = await createTestJob(accessToken);
     const res = await request(app)
-      .patch(`/api/jobs/${job._id}`)
+      .put(`/api/jobs/${job._id}`)
       .set("Authorization", `Bearer ${accessToken}`)
       .send({ title: "Updated Test Job" });
 

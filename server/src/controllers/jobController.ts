@@ -3,7 +3,7 @@ import Job from "../models/jobModel";
 import sanitizeJobPayload from "../utils/jobDTO";
 
 //@desc - create Job
-//@route - POST/api/job/create
+//@route - POST/api/jobs
 //@access - admin & employer
 export const createJob = async (req: Request, res: Response) => {
   try {
@@ -121,7 +121,7 @@ export const getAJob = async (req: Request, res: Response) => {
       return;
     }
 
-    res.status(200).json({ status: true, jab });
+    res.status(200).json({ status: true, job: jab });
   } catch (error) {
     console.log("job retrival error: ", error);
     res.status(500).json({ message: "Internal server error" });
@@ -129,19 +129,19 @@ export const getAJob = async (req: Request, res: Response) => {
 };
 
 //@desc - update job info
-//@route - POST/api/job/update/:id
+//@route - POST/api/jobs/update/:id
 export const updateJob = async (req: Request, res: Response) => {
   try {
     const updata = req.body;
     const jobId = req.params.id;
-    let jab = await Job.findById(jobId);
-    if (!jab || jab.length === 0) {
+    let job = await Job.findById(jobId);
+    if (!job || job.length === 0) {
       res.status(404).json({ status: false, message: "job not found" });
       return;
     }
     // Check if the user is the employer of the job
     const userId = (req as any).user?.id;
-    if (jab.employer.toString() !== userId) {
+    if (job.employer.toString() !== userId) {
       res.status(403).json({
         status: false,
         message: "You are not authorized to update this job",
@@ -149,14 +149,14 @@ export const updateJob = async (req: Request, res: Response) => {
       return;
     }
 
-    const updatedJob = await Job.findByIdAndUpdate(jobId, updata, {
+    job = await Job.findByIdAndUpdate(jobId, updata, {
       new: true,
       runValidators: true,
     });
 
     res
       .status(200)
-      .json({ status: true, message: "job info updated", job: updatedJob });
+      .json({ status: true, message: "job info updated", job });
   } catch (error) {
     console.log("job update error: ", error);
     res.status(500).json({ message: "Internal server error" });
@@ -164,7 +164,7 @@ export const updateJob = async (req: Request, res: Response) => {
 };
 
 //@desc - delete job
-//@route - DELETE/api/job/delete/:id
+//@route - DELETE/api/jobs/delete/:id
 export const deleteJob = async (req: Request, res: Response) => {
   try {
     const jobId = req.params.id;
