@@ -9,31 +9,37 @@ This is a portfolio project built with **TypeScript**, **Express.js**, and **Mon
 ## 🔍 Features
 
 ### 👤 Authentication & Authorization
+
 - User roles: `Admin`, `Recruiter`, `Applicant`
 - Signup, login, logout (JWT-based)
 - Protected routes with role-based access
 
 ### 💼 Job Management
+
 - Create, update, delete jobs (Recruiters)
 - Apply to jobs (Applicants)
 - Filter jobs by tags, title, type, location
 - Pagination, sorting, and keyword search
 
 ### 📄 Applications
+
 - Users can apply with resume uploads
 - Recruiters can view applicants
 - Admins can monitor all activity
 
 ### 👑 Admin Panel
+
 - Manage users and roles
 - View all jobs and applications
 - Delete users or jobs if needed
 
 ### 🧪 Testing
+
 - Full integration tests using Jest & Supertest
 - Coverage for Auth, Jobs, Applications, and Admin routes
 
 ### 📘 API Documentation
+
 - Swagger (OpenAPI 3.0) docs available at `/api/docs`
 
 ---
@@ -56,17 +62,19 @@ This is a portfolio project built with **TypeScript**, **Express.js**, and **Mon
 - **API Base URL**: [https://localhost:5001]
 - **Swagger Docs**: [https://localhost:5001/api/docs]
 
-
 _Optional demo account details:_
+
 ```bash
-Recruiter: recruiter@jabb.com / recruiter123  
-Applicant: applicant@jabb.com / applicant123  
+Recruiter: recruiter@jabb.com / recruiter123
+Applicant: applicant@jabb.com / applicant123
 Admin: admin@jabb.com / admin123
 ```
+
 --
 
 ## 🛠️ Local Setup
 
+```bash
 # Clone the repo
 git clone https://github.com/CODonnie/Jabb.git
 cd Jabb/server
@@ -85,7 +93,7 @@ npm test
 
 # Build for production
 npm run build
-
+```
 
 --
 
@@ -93,43 +101,47 @@ npm run build
 
 Jabb/server/
 ├── src/
-│   ├── controllers/
-│   ├── middlewares/
-│   ├── models/
-│   ├── routes/
-│   ├── utils/
-│   ├── __tests__/
-│   ├── app.ts
-│   └── server.ts
-├── uploads/  ← for resume files
+│ ├── controllers/
+│ ├── middlewares/
+│ ├── models/
+│ ├── routes/
+│ ├── utils/
+│ ├── **tests**/
+│ ├── app.ts
+│ └── server.ts
+├── uploads/ ← for resume files
 ├── .env.example
 └── tsconfig.json
 
 --
 
 ## 📌 Roadmap
- Auth & RBAC
 
- Job CRUD & search
+Auth & RBAC
 
- File uploads for resumes
+Job CRUD & search
 
- Admin controls
+File uploads for resumes
 
- Full integration testing
+Admin controls
 
- Swagger documentation
+Full integration testing
 
- Frontend (React) integration
+Swagger documentation
 
- Dockerized deployment
+Frontend (React) integration
 
- CI/CD workflow
+Dockerized deployment
+
+CI/CD workflow
 
 ## 📣 About the Developer
+
 Ordu Donald – Software Engineer & Graphic Designer
 
 --
 
 ## 📝 License
+
 This project is open-source and free to use under the MIT License.
+
