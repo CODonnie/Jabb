@@ -139,6 +139,15 @@ export const updateJob = async (req: Request, res: Response) => {
       res.status(404).json({ status: false, message: "job not found" });
       return;
     }
+    // Check if the user is the employer of the job
+    const userId = (req as any).user?.id;
+    if (jab.employer.toString() !== userId) {
+      res.status(403).json({
+        status: false,
+        message: "You are not authorized to update this job",
+      });
+      return;
+    }
 
     const updatedJob = await Job.findByIdAndUpdate(jobId, updata, {
       new: true,

@@ -6,8 +6,8 @@ import {authorize, permit} from "../middlewares/permissionMiddleware";
 const jobRoutes = express.Router();
 
 jobRoutes.post("/", protect, authorize("admin", "employer"), createJob);
-jobRoutes.get("/", protect, getJobs);
-jobRoutes.get("/:id", protect, getAJob);
+jobRoutes.get("/", getJobs);
+jobRoutes.get("/:id", getAJob);
 jobRoutes.put("/:id", protect, permit, updateJob);
 jobRoutes.delete("/:id", protect, permit, deleteJob);
 
