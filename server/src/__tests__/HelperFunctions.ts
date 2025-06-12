@@ -8,7 +8,7 @@ export const createTestUser = async (overrides: any = {}) => {
     const userData = {
         firstName: "John",
         lastName: "Doe",
-        email: "JohnDoe@mail.com",
+        email: `user_${Date.now()}@mail.com`,
         password: "securepassword",
         role,
         ...overrides,
