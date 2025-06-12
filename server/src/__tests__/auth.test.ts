@@ -1,5 +1,5 @@
 import request from "supertest";
-import { app } from "../index";
+import app from "../app";
 import { clearTestDB, connectTestDB, disconnectTestDB } from "../__tests__/testUtils";
 import User from "../models/userModel";
 
