@@ -53,15 +53,16 @@ This is a portfolio project built with **TypeScript**, **Express.js**, and **Mon
 
 ## 🚀 Live Demo
 
-- **API Base URL**: [https://api.jabbapp.xyz](https://api.jabbapp.xyz)
-- **Swagger Docs**: [https://api.jabbapp.xyz/api/docs](https://api.jabbapp.xyz/api/docs)
+- **API Base URL**: [https://localhost:5001]
+- **Swagger Docs**: [https://localhost:5001/api/docs]
+
 
 _Optional demo account details:_
 ```bash
 Recruiter: recruiter@jabb.com / recruiter123  
 Applicant: applicant@jabb.com / applicant123  
 Admin: admin@jabb.com / admin123
-
+```
 --
 
 ## 🛠️ Local Setup
